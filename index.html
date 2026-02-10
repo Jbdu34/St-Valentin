@@ -21,7 +21,9 @@
       /* Fond romantique dégradé */
       background: radial-gradient(circle at top left, #ffe6f2 0%, #ffb3c6 35%, #ff8fab 60%, #ff5d8f 100%);
       color: #3a0620;
-      overflow: hidden;
+      /* Permet de scroller sur mobile tout en évitant un débordement horizontal */
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     /* Conteneur principal centré */
@@ -255,7 +257,33 @@
     .heart:nth-child(5) { left: 70%; animation-duration: 12s; animation-delay: 1.5s; }
     .heart:nth-child(6) { left: 85%; animation-duration: 10s; animation-delay: 2.5s; }
 
-    /* --------- Responsive --------- */
+    /* --------- Responsive tablette / mobile --------- */
+    @media (max-width: 768px) {
+      body {
+        align-items: flex-start;
+        padding: 16px 12px;
+      }
+
+      .app {
+        align-items: stretch;
+      }
+
+      .card {
+        padding: 28px 22px;
+      }
+
+      .question-title,
+      .result-title {
+        font-size: clamp(1.6rem, 6vw, 2.1rem);
+      }
+
+      button {
+        width: 100%;
+        max-width: 260px;
+      }
+    }
+
+    /* --------- Responsive petit mobile --------- */
     @media (max-width: 480px) {
       .card {
         padding: 24px 18px;
@@ -298,7 +326,7 @@
     <!-- Carte résultat (cachée au début) -->
     <div id="resultCard" class="card hidden" aria-hidden="true">
       <div class="pop-heart">💖</div>
-      <h2 class="result-title">Yaaay 💕 Je savais que tu dirais oui !</h2>
+      <h2 class="result-title">Hehehehe 💕 Je savais que tu dirais oui !</h2>
       <p class="result-subtitle">Prépare-toi pour une Saint-Valentin inoubliable…</p>
 
       <!-- Conteneur pour l'image : ton JPG s'affichera ici après le "Oui" -->
