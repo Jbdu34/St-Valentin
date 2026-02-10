@@ -1,305 +1,333 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>💘 Saint-Valentin</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💘 Saint-Valentin</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-    }
+<style>
+:root{
+  --bg1:#ff9a9e;
+  --bg2:#fad0c4;
+  --card:#ffffffee;
+  --text:#c2185b;
+}
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      overflow: hidden;
-    }
+body.night{
+  --bg1:#1c1b2d;
+  --bg2:#3a2a4f;
+  --card:#2a2438ee;
+  --text:#ff8fb1;
+}
 
-    /* ❤️ TEXTE BACKGROUND */
-    .love-bg {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: clamp(3rem, 10vw, 8rem);
-      font-weight: 900;
-      color: rgba(255, 255, 255, 0.12);
-      text-align: center;
-      z-index: 0;
-      pointer-events: none;
-      text-transform: uppercase;
-    }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+}
 
-    /* 💕 COEURS FLOTTANTS */
-    .hearts {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      z-index: 1;
-      pointer-events: none;
-    }
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  overflow:hidden;
+  transition:background .6s ease;
+}
 
-    .heart {
-      position: absolute;
-      bottom: -20px;
-      animation: floatUp linear infinite;
-    }
+/* TEXTE AMOUR BACKGROUND */
+.love-bg{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:clamp(3rem,10vw,8rem);
+  font-weight:900;
+  color:rgba(255,255,255,0.1);
+  text-align:center;
+  pointer-events:none;
+  z-index:0;
+}
 
-    @keyframes floatUp {
-      from {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-120vh) scale(1.4);
-        opacity: 0;
-      }
-    }
+/* COEURS FLOTTANTS */
+.hearts{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+}
 
-    /* CONTENEUR */
-    .app {
-      position: relative;
-      width: 100%;
-      max-width: 640px;
-      padding: 24px;
-      z-index: 2;
-      text-align: center;
-    }
+.heart{
+  position:absolute;
+  bottom:-20px;
+  animation:floatUp linear infinite;
+}
 
-    .card {
-      background: rgba(255, 255, 255, 0.96);
-      border-radius: 22px;
-      padding: 36px 26px;
-      box-shadow: 0 30px 70px rgba(0,0,0,0.25);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      backdrop-filter: blur(4px);
-    }
+@keyframes floatUp{
+  from{transform:translateY(0) scale(1);opacity:1;}
+  to{transform:translateY(-120vh) scale(1.4);opacity:0;}
+}
 
-    .hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.95);
-      position: absolute;
-    }
+/* CONTENEUR */
+.app{
+  max-width:640px;
+  padding:24px;
+  z-index:2;
+  text-align:center;
+  position:relative;
+}
 
-    .visible {
-      opacity: 1;
-      transform: scale(1);
-    }
+.card{
+  background:var(--card);
+  border-radius:22px;
+  padding:36px 26px;
+  box-shadow:0 30px 70px rgba(0,0,0,0.25);
+  transition:opacity .4s ease,transform .4s ease;
+  color:var(--text);
+}
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 26px;
-      color: #c2185b;
-    }
+.hidden{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(.95);
+  position:absolute;
+}
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      min-height: 64px;
-      flex-wrap: wrap;
-    }
+h1{
+  font-size:2rem;
+  margin-bottom:26px;
+}
 
-    button {
-      padding: 16px 34px;
-      border-radius: 999px;
-      border: none;
-      font-size: 1.15rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+/* BOUTONS */
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
 
-    #yesButton {
-      background: linear-gradient(135deg, #ff4d6d, #ff758f);
-      color: white;
-      box-shadow: 0 10px 26px rgba(255, 77, 109, 0.5);
-    }
+button{
+  padding:16px 34px;
+  border-radius:999px;
+  border:none;
+  font-size:1.1rem;
+  cursor:pointer;
+}
 
-    #yesButton:hover {
-      transform: scale(1.12);
-    }
+#yesButton{
+  background:linear-gradient(135deg,#ff4d6d,#ff758f);
+  color:white;
+}
 
-    #noButton {
-      background: #ffe4ec;
-      color: #b32653;
-      box-shadow: 0 6px 18px rgba(179, 38, 83, 0.35);
-      position: relative;
-      cursor: default;
-      user-select: none;
-      transition: left 0.25s ease, top 0.25s ease;
-    }
+#noButton{
+  background:#ffe4ec;
+  color:#b32653;
+  position:relative;
+  user-select:none;
+}
 
-    /* ⏳ COUNTDOWN */
-    .countdown {
-      font-size: 4rem;
-      font-weight: bold;
-      color: #c2185b;
-      animation: pop 0.4s ease;
-    }
+/* COUNTDOWN */
+.countdown{
+  font-size:4rem;
+  font-weight:bold;
+}
 
-    .result-message {
-      font-size: 1.9rem;
-      color: #c2185b;
-      margin-bottom: 22px;
-      animation: pop 0.6s ease forwards;
-    }
+/* TEXTE MANUSCRIT */
+.handwritten{
+  font-family:"Segoe Script","Brush Script MT",cursive;
+  font-size:2.1rem;
+  min-height:2.6em;
+  margin-bottom:12px;
+}
 
-    .gif-container {
-      max-width: 360px;
-      margin: auto;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.3);
-      animation: fadeZoom 0.6s ease forwards;
-    }
+/* SIGNATURE */
+.signature{
+  font-family:"Segoe Script","Brush Script MT",cursive;
+  font-size:1.4rem;
+  opacity:0;
+  margin-bottom:16px;
+  transition:opacity .6s ease;
+}
 
-    .gif-container img {
-      width: 100%;
-      display: block;
-    }
+/* IMAGE / GIF (CORRECTION DEFORMATION) */
+.gif-container{
+  max-width:360px;
+  margin:auto;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 18px 45px rgba(0,0,0,0.3);
+}
 
-    @keyframes pop {
-      from { transform: scale(0.6); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
+.gif-container img{
+  width:100%;
+  height:100%;
+  object-fit:cover; /* ✅ PAS DE DEFORMATION */
+  display:block;
+}
 
-    @keyframes fadeZoom {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
+/* MODE NUIT */
+.mode-toggle{
+  position:fixed;
+  top:16px;
+  right:16px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:var(--card);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  z-index:5;
+}
 
-    @media (max-width: 480px) {
-      h1 { font-size: 1.6rem; }
-      button { width: 100%; }
-    }
-  </style>
+/* BOUTON SECRET */
+.secret{
+  margin-top:14px;
+  font-size:.9rem;
+  opacity:0;
+  cursor:pointer;
+  transition:.4s;
+}
+.secret.visible{opacity:.7;}
+
+@media(max-width:480px){
+  h1{font-size:1.6rem;}
+  button{width:100%;}
+}
+</style>
 </head>
+
 <body>
 
-  <!-- TEXTE AMOUR -->
-  <div class="love-bg">JE T’AIME<br>AMANDINE</div>
+<div class="love-bg">JE T’AIME<br>AMANDINE</div>
+<div class="hearts" id="hearts"></div>
+<div class="mode-toggle" id="modeToggle">🌙</div>
 
-  <!-- COEURS -->
-  <div class="hearts" id="hearts"></div>
+<!-- SON LOCAL -->
+<audio id="loveSound" preload="auto">
+  <source src="sound/love.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- AUDIO -->
-  <audio id="loveSound" preload="auto">
-    <!-- Tu peux remplacer le son -->
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sweep-game-trophy-257.mp3" type="audio/mpeg">
-  </audio>
+<div class="app">
 
-  <div class="app">
-
-    <!-- QUESTION -->
-    <div id="questionCard" class="card visible">
-      <h1>Veux-tu être ma Valentine ? 💖</h1>
-      <div class="buttons">
-        <button id="yesButton">Oui 💘</button>
-        <button id="noButton">Non 😢</button>
-      </div>
+  <!-- QUESTION -->
+  <div id="questionCard" class="card">
+    <h1>Veux-tu être ma Valentine ? 💖</h1>
+    <div class="buttons">
+      <button id="yesButton">Oui 💘</button>
+      <button id="noButton">Non 😢</button>
     </div>
-
-    <!-- COUNTDOWN -->
-    <div id="countdownCard" class="card hidden">
-      <div class="countdown" id="countdown">3</div>
-    </div>
-
-    <!-- RESULTAT -->
-    <div id="resultCard" class="card hidden">
-      <div class="result-message">Je t’aime Amandine 💕</div>
-      <div class="gif-container">
-        <img src="image/Jb.jpg" alt="Valentine">
-      </div>
-    </div>
-
   </div>
 
-  <script>
-    const yesButton = document.getElementById("yesButton");
-    const noButton = document.getElementById("noButton");
-    const questionCard = document.getElementById("questionCard");
-    const countdownCard = document.getElementById("countdownCard");
-    const countdownEl = document.getElementById("countdown");
-    const resultCard = document.getElementById("resultCard");
-    const app = document.querySelector(".app");
-    const heartsContainer = document.getElementById("hearts");
-    const sound = document.getElementById("loveSound");
+  <!-- COUNTDOWN -->
+  <div id="countdownCard" class="card hidden">
+    <div class="countdown" id="countdown">3</div>
+  </div>
 
-    let noInit = false;
+  <!-- RESULTAT -->
+  <div id="resultCard" class="card hidden">
+    <div class="handwritten" id="handText"></div>
+    <div class="signature" id="signature">— Pour toujours, JB</div>
+    <div class="gif-container">
+      <img src="image/Jb.jpg" alt="Valentine">
+    </div>
+    <div class="secret" id="secret">💌 (psst…)</div>
+  </div>
 
-    yesButton.addEventListener("click", () => {
-      sound.play();
-      questionCard.classList.add("hidden");
-      countdownCard.classList.remove("hidden");
+</div>
 
-      let count = 3;
-      countdownEl.textContent = count;
+<script>
+const yes=document.getElementById("yesButton");
+const no=document.getElementById("noButton");
+const qc=document.getElementById("questionCard");
+const cc=document.getElementById("countdownCard");
+const rc=document.getElementById("resultCard");
+const cd=document.getElementById("countdown");
+const txt=document.getElementById("handText");
+const sig=document.getElementById("signature");
+const secret=document.getElementById("secret");
+const hearts=document.getElementById("hearts");
+const sound=document.getElementById("loveSound");
+const mode=document.getElementById("modeToggle");
 
-      const interval = setInterval(() => {
-        count--;
-        if (count > 0) {
-          countdownEl.textContent = count;
-        } else {
-          clearInterval(interval);
-          countdownCard.classList.add("hidden");
-          resultCard.classList.remove("hidden");
-          launchConfetti();
-        }
-      }, 1000);
-    });
+/* CLICK OUI */
+yes.onclick=()=>{
+  sound.currentTime=0;
+  sound.play().catch(()=>{});
+  if(navigator.vibrate) navigator.vibrate(120);
 
-    function initNoButton() {
-      if (noInit) return;
-      const rect = noButton.getBoundingClientRect();
-      const appRect = app.getBoundingClientRect();
-      app.appendChild(noButton);
-      noButton.style.position = "absolute";
-      noButton.style.left = rect.left - appRect.left + "px";
-      noButton.style.top = rect.top - appRect.top + "px";
-      noInit = true;
+  no.style.display="none";
+  qc.classList.add("hidden");
+  cc.classList.remove("hidden");
+
+  let c=3;
+  cd.textContent=c;
+
+  const timer=setInterval(()=>{
+    if(navigator.vibrate) navigator.vibrate(50);
+    c--;
+    if(c>0){
+      cd.textContent=c;
+    }else{
+      clearInterval(timer);
+      cc.classList.add("hidden");
+      rc.classList.remove("hidden");
+      writeText("Je t’aime Amandine 💕");
     }
+  },1000);
+};
 
-    function moveNo() {
-      initNoButton();
-      const maxX = app.clientWidth - noButton.offsetWidth;
-      const maxY = app.clientHeight - noButton.offsetHeight;
-      noButton.style.left = Math.random() * maxX + "px";
-      noButton.style.top = Math.random() * maxY + "px";
+/* TEXTE MANUSCRIT + VIBRATION PAR LETTRE */
+function writeText(text){
+  let i=0;
+  txt.textContent="";
+  const interval=setInterval(()=>{
+    txt.textContent+=text[i];
+    if(navigator.vibrate) navigator.vibrate(20);
+    i++;
+    if(i>=text.length){
+      clearInterval(interval);
+      sig.style.opacity=1;
+      secret.classList.add("visible");
     }
+  },90);
+}
 
-    noButton.addEventListener("mouseenter", moveNo);
-    noButton.addEventListener("click", e => {
-      e.preventDefault();
-      moveNo();
-    });
+/* BOUTON SECRET */
+secret.onclick=()=>{
+  alert("Tu es la plus belle chose qui me soit arrivée 💖");
+};
 
-    function spawnHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent = "💗";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = 12 + Math.random() * 24 + "px";
-      heart.style.animationDuration = 6 + Math.random() * 6 + "s";
-      heartsContainer.appendChild(heart);
-      setTimeout(() => heart.remove(), 12000);
-    }
+/* COEURS */
+function spawnHeart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.textContent="💗";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=12+Math.random()*24+"px";
+  h.style.animationDuration=6+Math.random()*6+"s";
+  hearts.appendChild(h);
+  setTimeout(()=>h.remove(),12000);
+}
+setInterval(spawnHeart,350);
 
-    setInterval(spawnHeart, 350);
+/* MODE NUIT */
+mode.onclick=()=>{
+  document.body.classList.toggle("night");
+  mode.textContent=document.body.classList.contains("night")?"☀️":"🌙";
+};
 
-    function launchConfetti() {
-      for (let i = 0; i < 40; i++) {
-        setTimeout(spawnHeart, i * 60);
-      }
-    }
-  </script>
+/* BOUTON NON QUI FUIT */
+no.onmouseenter=()=>{
+  no.style.position="absolute";
+  no.style.left=Math.random()*80+"%";
+  no.style.top=Math.random()*80+"%";
+};
+</script>
+
 </body>
 </html>
