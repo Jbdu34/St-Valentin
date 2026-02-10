@@ -2,408 +2,304 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Veux-tu être ma Valentine ? 💖</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💘 Saint-Valentin</title>
+
   <style>
-    /* --------- Reset simple --------- */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      /* Fond romantique dégradé */
-      background: radial-gradient(circle at top left, #ffe6f2 0%, #ffb3c6 35%, #ff8fab 60%, #ff5d8f 100%);
-      color: #3a0620;
-      /* Permet de scroller sur mobile tout en évitant un débordement horizontal */
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-
-    /* Conteneur principal centré */
-    .app {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-      padding: 24px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      z-index: 2; /* au-dessus des cœurs animés */
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 24px;
-      padding: 40px 32px;
-      box-shadow: 0 18px 45px rgba(255, 0, 102, 0.25);
-      backdrop-filter: blur(8px);
-      width: 100%;
-      max-width: 640px; /* carte un peu plus large et bien centrée */
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    /* Titre/question */
-    .question-title {
-      font-size: clamp(1.8rem, 4vw, 2.4rem);
-      font-weight: 700;
-      margin-bottom: 24px;
-      line-height: 1.3;
-    }
-
-    /* Conteneur des boutons */
-    .buttons {
-      margin-top: 12px;
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      position: relative;
-      min-height: 60px; /* laisse de la place pour le bouton "Non" qui bouge */
-    }
-
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 12px 28px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
-      position: relative;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       overflow: hidden;
-      white-space: nowrap;
     }
 
-    /* Bouton Oui – style principal */
-    #yesButton {
-      background: linear-gradient(135deg, #ff5d8f, #ff85a1);
-      color: #fff;
-      box-shadow: 0 10px 25px rgba(255, 0, 102, 0.4);
-    }
-
-    /* Effet hover mignon sur le bouton Oui */
-    #yesButton::before {
-      content: "💘";
-      position: absolute;
-      left: 12px;
-      opacity: 0;
-      transform: translateY(8px) scale(0.7);
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-
-    #yesButton:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 14px 32px rgba(255, 0, 128, 0.5);
-      background: linear-gradient(135deg, #ff3366, #ff89b5);
-    }
-
-    #yesButton:hover::before {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    #yesButton:active {
-      transform: translateY(0) scale(0.97);
-      box-shadow: 0 6px 18px rgba(255, 0, 102, 0.3);
-    }
-
-    /* Bouton Non – il fuit la souris :) */
-    #noButton {
-      background: #ffe4ec;
-      color: #b32653;
-      box-shadow: 0 6px 18px rgba(179, 38, 83, 0.3);
-      /* position relative comme les autres au départ pour rester dans le flex */
-      position: relative;
-      cursor: default; /* visuellement moins "cliquable" */
-      user-select: none;
-    }
-
-    #noButton:hover {
-      /* pas de hover spécial, il ne devrait jamais rester assez proche */
-    }
-
-    /* État caché / affiché des cartes */
-    .hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(10px) scale(0.98);
-    }
-
-    .visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0) scale(1);
-    }
-
-    /* Carte de résultat */
-    .result-title {
-      font-size: clamp(1.7rem, 3.5vw, 2.3rem);
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    .result-subtitle {
-      font-size: 1rem;
-      opacity: 0.8;
-      margin-bottom: 24px;
-    }
-
-    /* Conteneur pour l'image / GIF */
-    .gif-container {
-      width: 100%;
-      max-width: 480px; /* plus large pour que la photo soit bien visible */
-      border-radius: 20px;
-      border: 2px dashed rgba(255, 105, 135, 0.6);
+    /* ❤️ TEXTE BACKGROUND */
+    .love-bg {
+      position: fixed;
+      inset: 0;
       display: flex;
-      align-items: center;
       justify-content: center;
-      margin: 0 auto 16px;
-      background: rgba(255, 245, 248, 0.9);
-      color: #b32653;
-      font-size: 0.9rem;
-      padding: 8px;
+      align-items: center;
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.12);
+      text-align: center;
+      z-index: 0;
+      pointer-events: none;
+      text-transform: uppercase;
     }
 
-    /* Petit cœur qui pop lors du "Oui" */
-    .pop-heart {
-      font-size: 2.4rem;
-      margin-bottom: 8px;
-      opacity: 0;
-      transform: scale(0.5) translateY(10px);
-      animation: popHeart 0.8s ease forwards;
-    }
-
-    @keyframes popHeart {
-      0% {
-        opacity: 0;
-        transform: scale(0.5) translateY(10px);
-      }
-      60% {
-        opacity: 1;
-        transform: scale(1.15) translateY(0);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    /* --------- Cœurs animés en arrière-plan --------- */
-    .hearts-container {
+    /* 💕 COEURS FLOTTANTS */
+    .hearts {
       position: fixed;
       inset: 0;
       overflow: hidden;
+      z-index: 1;
       pointer-events: none;
-      z-index: 0;
     }
 
     .heart {
       position: absolute;
-      width: 18px;
-      height: 18px;
-      background: rgba(255, 255, 255, 0.85);
-      transform: rotate(45deg);
-      opacity: 0.7;
-      animation: floatUp 9s linear infinite;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      background: inherit;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -9px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: -9px;
-      top: 0;
+      bottom: -20px;
+      animation: floatUp linear infinite;
     }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(100vh) scale(0.6) rotate(45deg);
-        opacity: 0;
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
       }
-      15% {
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(-10vh) scale(1) rotate(45deg);
+      to {
+        transform: translateY(-120vh) scale(1.4);
         opacity: 0;
       }
     }
 
-    /* Positions & décalages pour plusieurs cœurs */
-    .heart:nth-child(1) { left: 10%; animation-duration: 10s; animation-delay: 0s; }
-    .heart:nth-child(2) { left: 25%; animation-duration: 8s;  animation-delay: 1s; }
-    .heart:nth-child(3) { left: 40%; animation-duration: 11s; animation-delay: 2s; }
-    .heart:nth-child(4) { left: 55%; animation-duration: 9s;  animation-delay: 0.5s; }
-    .heart:nth-child(5) { left: 70%; animation-duration: 12s; animation-delay: 1.5s; }
-    .heart:nth-child(6) { left: 85%; animation-duration: 10s; animation-delay: 2.5s; }
-
-    /* --------- Responsive tablette / mobile --------- */
-    @media (max-width: 768px) {
-      body {
-        /* Centre la carte au milieu de l'écran sur téléphone */
-        align-items: center;
-        padding: 16px 12px;
-      }
-
-      .app {
-        align-items: center;
-      }
-
-      .card {
-        padding: 28px 22px;
-      }
-
-      .question-title,
-      .result-title {
-        /* Titre un peu plus petit et fluide pour rester proportionnel aux boutons */
-        font-size: clamp(1.4rem, 5.5vw, 1.9rem);
-      }
-
-      button {
-        width: 100%;
-        max-width: 280px;
-        font-size: 0.95rem;
-        /* Autorise le texte à passer à la ligne dans les boutons sur petit écran */
-        white-space: normal;
-      }
+    /* CONTENEUR */
+    .app {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      padding: 24px;
+      z-index: 2;
+      text-align: center;
     }
 
-    /* --------- Responsive petit mobile --------- */
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 22px;
+      padding: 36px 26px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.25);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+      position: absolute;
+    }
+
+    .visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 26px;
+      color: #c2185b;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      min-height: 64px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 16px 34px;
+      border-radius: 999px;
+      border: none;
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #yesButton {
+      background: linear-gradient(135deg, #ff4d6d, #ff758f);
+      color: white;
+      box-shadow: 0 10px 26px rgba(255, 77, 109, 0.5);
+    }
+
+    #yesButton:hover {
+      transform: scale(1.12);
+    }
+
+    #noButton {
+      background: #ffe4ec;
+      color: #b32653;
+      box-shadow: 0 6px 18px rgba(179, 38, 83, 0.35);
+      position: relative;
+      cursor: default;
+      user-select: none;
+      transition: left 0.25s ease, top 0.25s ease;
+    }
+
+    /* ⏳ COUNTDOWN */
+    .countdown {
+      font-size: 4rem;
+      font-weight: bold;
+      color: #c2185b;
+      animation: pop 0.4s ease;
+    }
+
+    .result-message {
+      font-size: 1.9rem;
+      color: #c2185b;
+      margin-bottom: 22px;
+      animation: pop 0.6s ease forwards;
+    }
+
+    .gif-container {
+      max-width: 360px;
+      margin: auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.3);
+      animation: fadeZoom 0.6s ease forwards;
+    }
+
+    .gif-container img {
+      width: 100%;
+      display: block;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeZoom {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
     @media (max-width: 480px) {
-      .card {
-        padding: 24px 18px;
-      }
-
-      .buttons {
-        flex-direction: column;
-        align-items: center;
-        min-height: 100px;
-      }
-
-      #noButton {
-        position: relative;
-      }
+      h1 { font-size: 1.6rem; }
+      button { width: 100%; }
     }
   </style>
 </head>
 <body>
-  <!-- Cœurs animés en arrière-plan -->
-  <div class="hearts-container" aria-hidden="true">
-    <div class="heart"></div>
-    <div class="heart"></div>
-    <div class="heart"></div>
-    <div class="heart"></div>
-    <div class="heart"></div>
-    <div class="heart"></div>
-  </div>
 
-  <!-- Contenu principal -->
+  <!-- TEXTE AMOUR -->
+  <div class="love-bg">JE T’AIME<br>AMANDINE</div>
+
+  <!-- COEURS -->
+  <div class="hearts" id="hearts"></div>
+
+  <!-- AUDIO -->
+  <audio id="loveSound" preload="auto">
+    <!-- Tu peux remplacer le son -->
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sweep-game-trophy-257.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="app">
-    <!-- Carte question -->
+
+    <!-- QUESTION -->
     <div id="questionCard" class="card visible">
-      <h1 class="question-title">Veux-tu être ma Valentine ? 💖</h1>
+      <h1>Veux-tu être ma Valentine ? 💖</h1>
       <div class="buttons">
-        <button id="yesButton" type="button">Oui 💘</button>
-        <button id="noButton" type="button">Non 😢</button>
+        <button id="yesButton">Oui 💘</button>
+        <button id="noButton">Non 😢</button>
       </div>
     </div>
 
-    <!-- Carte résultat (cachée au début) -->
-    <div id="resultCard" class="card hidden" aria-hidden="true">
-      <div class="pop-heart">💖</div>
-      <h2 class="result-title">Hehehehe 💕 Je savais que tu dirais oui !</h2>
-      <p class="result-subtitle">Prépare-toi pour une Saint-Valentin inoubliable…</p>
+    <!-- COUNTDOWN -->
+    <div id="countdownCard" class="card hidden">
+      <div class="countdown" id="countdown">3</div>
+    </div>
 
-      <!-- Conteneur pour l'image : ton JPG s'affichera ici après le "Oui" -->
+    <!-- RESULTAT -->
+    <div id="resultCard" class="card hidden">
+      <div class="result-message">Je t’aime Amandine 💕</div>
       <div class="gif-container">
-        <!-- Assure-toi que Jb.jpg est bien dans le dossier "image" à côté de index.html (image/Jb.jpg) -->
-        <img src="image/Jb.jpg"
-             alt="Nous deux"
-             style="width:100%;height:auto;object-fit:contain;border-radius:18px;" />
+        <img src="image/Jb.jpg" alt="Valentine">
       </div>
     </div>
+
   </div>
 
   <script>
-    // --------- Sélection des éléments ---------
     const yesButton = document.getElementById("yesButton");
     const noButton = document.getElementById("noButton");
     const questionCard = document.getElementById("questionCard");
+    const countdownCard = document.getElementById("countdownCard");
+    const countdownEl = document.getElementById("countdown");
     const resultCard = document.getElementById("resultCard");
+    const app = document.querySelector(".app");
+    const heartsContainer = document.getElementById("hearts");
+    const sound = document.getElementById("loveSound");
 
-    // Position de base du bouton Non (coordonnées dans la fenêtre)
-    let noBtnX = null;
-    let noBtnY = null;
-    let noInitialized = false; // passe à true quand on le met en position: fixed
+    let noInit = false;
 
-    // --------- Comportement du bouton Oui ---------
     yesButton.addEventListener("click", () => {
-      // Transition douce : on masque la question, on affiche le résultat
-      questionCard.classList.remove("visible");
+      sound.play();
       questionCard.classList.add("hidden");
+      countdownCard.classList.remove("hidden");
 
-      setTimeout(() => {
-        resultCard.classList.remove("hidden");
-        resultCard.classList.add("visible");
-        resultCard.setAttribute("aria-hidden", "false");
-      }, 250);
+      let count = 3;
+      countdownEl.textContent = count;
+
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          countdownEl.textContent = count;
+        } else {
+          clearInterval(interval);
+          countdownCard.classList.add("hidden");
+          resultCard.classList.remove("hidden");
+          launchConfetti();
+        }
+      }, 1000);
     });
 
-    // --------- Bouton Non : il fuit seulement quand on clique ---------
-    function teleportNoButton() {
+    function initNoButton() {
+      if (noInit) return;
       const rect = noButton.getBoundingClientRect();
-
-      // Initialisation : on mémorise la première position et on passe en fixed
-      if (!noInitialized) {
-        noBtnX = rect.left;
-        noBtnY = rect.top;
-        noButton.style.position = "fixed";
-        noButton.style.left = `${noBtnX}px`;
-        noButton.style.top = `${noBtnY}px`;
-        noInitialized = true;
-      }
-
-      const padding = 20;
-      const maxX = window.innerWidth - rect.width - padding;
-      const maxY = window.innerHeight - rect.height - padding;
-
-      // Nouvelle position aléatoire dans la fenêtre (mur invisible aux bords)
-      const newX = Math.random() * (maxX - padding) + padding;
-      const newY = Math.random() * (maxY - padding) + padding;
-
-      noBtnX = newX;
-      noBtnY = newY;
-
-      noButton.style.left = `${noBtnX}px`;
-      noButton.style.top = `${noBtnY}px`;
+      const appRect = app.getBoundingClientRect();
+      app.appendChild(noButton);
+      noButton.style.position = "absolute";
+      noButton.style.left = rect.left - appRect.left + "px";
+      noButton.style.top = rect.top - appRect.top + "px";
+      noInit = true;
     }
 
-    // Le bouton Non ne doit jamais être cliquable : il se téléporte au clic
-    noButton.addEventListener("click", (e) => {
+    function moveNo() {
+      initNoButton();
+      const maxX = app.clientWidth - noButton.offsetWidth;
+      const maxY = app.clientHeight - noButton.offsetHeight;
+      noButton.style.left = Math.random() * maxX + "px";
+      noButton.style.top = Math.random() * maxY + "px";
+    }
+
+    noButton.addEventListener("mouseenter", moveNo);
+    noButton.addEventListener("click", e => {
       e.preventDefault();
-      e.stopPropagation();
-      teleportNoButton();
+      moveNo();
     });
+
+    function spawnHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "💗";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = 12 + Math.random() * 24 + "px";
+      heart.style.animationDuration = 6 + Math.random() * 6 + "s";
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 12000);
+    }
+
+    setInterval(spawnHeart, 350);
+
+    function launchConfetti() {
+      for (let i = 0; i < 40; i++) {
+        setTimeout(spawnHeart, i * 60);
+      }
+    }
   </script>
 </body>
 </html>
